@@ -1,40 +1,78 @@
-import Link from 'next/link';
-import Navbar from '../components/Navbar';
-import Head from 'next/head'
+import Link from "next/link";
+import Navbar from "../components/Navbar";
+import Head from "next/head";
+import Image from "next/image";
 
 function Portfolio() {
 	return (
 		<>
 			<Head>
-			  <title>Portfolio</title>
+				<title>Portfolio</title>
 			</Head>
 
 			<Navbar />
 
 			<section className="hero">
-			  <div className="container">
-			    <div className="text-wrapper w-full">
-			      <h1 className="title">Portfolio</h1>
-			      <p className="description">
-			      	Incididunt in cillum magna occaecat nisi qui in.
-			      </p>
+				<div className="container">
+					<div className="text-wrapper w-full">
+						<h1 className="title">Portfolio</h1>
+						<p className="description">
+							These are a couple of sample projects that i host on my test
+							server.
+						</p>
 
-			      <div className="portfolio-wrapper">
-			      	<div className="portfolio-item">
-			      		<img src="/chitchat.png" className="portfolio-image" />
-
-			      		<h4 className="portfolio-name">Chat App Exploration</h4>
-			      		<div className="portfolio-category">Mobile Dev</div>
-			      	</div>
-			      	<div className="portfolio-item">
-			      		<img src="/kajian.jpg" className="portfolio-image" />
-
-			      		<h4 className="portfolio-name">kajian App</h4>
-			      		<div className="portfolio-category">Mobile Dev</div>
-			      	</div>
-			      </div>
-		      </div>
-	      </div>
+						<div className="portfolio-wrapper">
+							<div className="portfolio-item">
+								<a href="https://www.social.korakakis.com">
+									<Image
+										src="/social.png"
+										className="portfolio-image"
+										width={1280}
+										height={980}
+									/>
+								</a>
+								<div className="div-left">
+									<h4 className="portfolio-name">Social Network App</h4>
+									<div className="portfolio-category">Web App</div>
+								</div>
+								<div className="div-right">
+									<h4 className="tech-header">Tech Stack</h4>
+                                    <ul>
+									<li className="tech-name">ASP Core 5.0</li>
+									<li className="tech-name">NextJS</li>
+									<li className="tech-name">IdentityServer4</li>
+									<li className="tech-name">Material-UI</li>
+									<li className="tech-name">PostgreSQL</li>
+									<li className="tech-name">Docker/Kubernetes</li>
+                                    </ul>
+								</div>
+							</div>
+							<div className="portfolio-item">
+								<a href="https://zen1one.korakakis.com">
+									<Image
+										src="/zenone.png"
+										className="portfolio-image"
+										width={1280}
+										height={980}
+									/>
+								</a>
+                                <div className="div-left">
+								<h4 className="portfolio-name">Wordpress Website - Shop</h4>
+								<div className="portfolio-category">Wordpress</div>
+                                </div>
+                                <div className="div-right">
+                                <div className="div-right">
+									<h4 className="tech-header">Tech Stack</h4>
+                                    <ul>
+									<li className="tech-name">Wordpress</li>
+									<li className="tech-name">Woocommerce</li>
+                                    </ul>
+								</div>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 		</>
 	);
