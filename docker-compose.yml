@@ -33,4 +33,4 @@ networks:
   portfolio:
   nginx-proxy:
     external:
-      name: nginx-proxy
+      name: ssl_nginx-proxy

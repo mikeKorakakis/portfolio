@@ -42,11 +42,12 @@ services:
     container_name: portainer
     restart: always
     environment:
-      - VIRTUAL_HOST=docker.korakakis.com
-      - LETSENCRYPT_HOST=docker.korakakis.com
+      - VIRTAL_PORT=9000
+      - VIRTUAL_HOST=portainer.korakakis.com
+      - LETSENCRYPT_HOST=portainer.korakakis.com
       - LETSENCRYPT_EMAIL=mike.korakakis@gmail.com
     volumes:
-      - ./portainer/:/data
+      - portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "9000:9000"
