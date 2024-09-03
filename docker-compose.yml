@@ -1,0 +1,36 @@
+version: "3"
+services:
+    portfolio:
+        container_name: portfolio
+        build: .
+        # image: mikekorakakis/motobook:client-social
+        environment:
+            VIRTUAL_HOST: mike.korakakis.com
+            LETSENCRYPT_HOST: mike.korakakis.com
+            LETSENCRYPT_EMAIL: mike.korakakis@gmail.com
+        #     args:
+        #         NEXT_PUBLIC_AUTH0_DOMAIN: identity:5000
+        ports:
+            - "6000:3000"
+        networks:
+            - nginx-proxy
+            - portfolio
+
+
+volumes:
+    db-data:
+    docker_sock:
+    certs:
+    vhost.d:
+    html:
+# networks:
+#     my-network:
+#         ipam:
+#             config:
+#                 - subnet: 172.20.0.0/16
+
+networks:
+  portfolio:
+  nginx-proxy:
+    external:
+      name: nginx-proxy

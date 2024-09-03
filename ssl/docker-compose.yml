@@ -1,0 +1,87 @@
+version: '2'
+
+services:
+
+  proxy:
+    image: jwilder/nginx-proxy
+    container_name: proxy
+    restart: unless-stopped
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:rw
+      - vhost.d:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - "default"
+      - "nginx-proxy"
+
+  proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    restart: unless-stopped
+    environment:
+      - NGINX_PROXY_CONTAINER=proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - "proxy"
+    depends_on:
+      - "proxy"
+    networks:
+      - "default"
+      - "nginx-proxy"
+
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    restart: always
+    environment:
+      - VIRTUAL_HOST=docker.korakakis.com
+      - LETSENCRYPT_HOST=docker.korakakis.com
+      - LETSENCRYPT_EMAIL=mike.korakakis@gmail.com
+    volumes:
+      - ./portainer/:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9000:9000"
+    networks:
+      - "default"
+      - "nginx-proxy"
+  
+  netdata:
+    image: firehol/netdata
+    container_name: netdata
+    hostname: monitor.korakakis.com
+    ports:
+      - 19999:19999
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - VIRTUAL_HOST=monitor.korakakis.com
+      - LETSENCRYPT_HOST=monitor.korakakis.com
+      - LETSENCRYPT_EMAIL=mike.korakakis@gmail.com
+    networks:
+      - "default"
+      - "nginx-proxy"
+
+
+volumes:
+  certs:
+  vhost.d:
+  html:
+
+networks:
+  default:
+  nginx-proxy:
